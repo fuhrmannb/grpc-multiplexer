@@ -7,11 +7,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-type ServerRegistryObserver struct {
-	Event  *WatchGRPCServerResponse
-	client string
-}
-
 type ServerRegistry struct {
 	// Use it as map[string]*grpc.ClientConn
 	streamManagers sync.Map
