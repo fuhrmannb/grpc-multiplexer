@@ -68,6 +68,7 @@ func (s *server) Run() error {
 		return outCtx, clientConn, nil
 	}
 	// FIXME: use encoding.RegisterCodec + add Name() method to proxy.Codec
+	//nolint:staticcheck
 	proxyServer := grpc.NewServer(
 		grpc.CustomCodec(proxy.Codec()),
 		grpc.UnknownServiceHandler(proxy.TransparentHandler(director)))
