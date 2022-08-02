@@ -1,0 +1,9 @@
+---
+version: v1
+lint:
+  use:
+    - DEFAULT
+    - COMMENTS
+breaking:
+  use:
+    - FILE

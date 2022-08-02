@@ -24,7 +24,7 @@ func (cr *ServerRegistry) Register(server string, stream *grpc.ClientConn) error
 	}
 	cr.streamManagers.Store(server, stream)
 
-	cr.notifyObservers(server, WatchGRPCServerResponse_CONNECTED)
+	cr.notifyObservers(server, WatchGRPCServerResponse_EVENT_CONNECTED)
 
 	return nil
 }
@@ -32,7 +32,7 @@ func (cr *ServerRegistry) Register(server string, stream *grpc.ClientConn) error
 func (cr *ServerRegistry) Unregister(server string) {
 	cr.streamManagers.Delete(server)
 
-	cr.notifyObservers(server, WatchGRPCServerResponse_DISCONNECTED)
+	cr.notifyObservers(server, WatchGRPCServerResponse_EVENT_DISCONNECTED)
 }
 
 func (cr *ServerRegistry) Get(server string) (*grpc.ClientConn, bool) {

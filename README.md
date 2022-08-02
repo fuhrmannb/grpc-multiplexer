@@ -37,7 +37,7 @@ The proxy endpoint allows access to:
 
 * Each connected gRPC server (through the Multiplexer Client). The gRPC API is the same as the destination gRPC Server.
   Only a gRPC metadata `client-id` should be specified with the ID of the Multiplexer Client to specify the server to send the request to.
-* The [Discovery gRPC API](protobuf/grpc/multiplexer/discovery.proto) that allows user to list the connected gRPC servers.
+* The [Discovery gRPC API](protobuf/grpc/multiplexer/v1/discovery.proto) that allows user to list the connected gRPC servers.
 
 ## Installation 
 
@@ -73,6 +73,16 @@ You can also configure the same options in a YAML file located:
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+### Generate protobuf code
+
+Use [buf.build](https://buf.build/) to generate code :
+
+```shell
+buf generate
+```
+
+The generated code should be part of your pull request.
 
 ## License
 

@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package grpc.multiplexer.v1;
+option csharp_namespace = "GRPC.Multiplexer";
+option go_package = "github.com/fuhrmannb/grpc_multiplexer/discovery";
+
+// Discovery service allows client to get information of connected multiplexer client on the server.
+service DiscoveryService {
+  // ListGRPCServer lists all gRPC server that are available through the multiplexer client connection.
+  rpc ListGRPCServer(ListGRPCServerRequest) returns (ListGRPCServerResponse);
+  // ListGRPCServer watches event of connection & disconnection of gRPC server accessible through multiplexer client.
+  rpc WatchGRPCServer(WatchGRPCServerRequest) returns (stream WatchGRPCServerResponse);
+}
+
+// ListGRPCServerRequest is the request message for ListGRPCServer method.
+message ListGRPCServerRequest {}
+
+// ListGRPCServerResponse is the response message for ListGRPCServer method.
+message ListGRPCServerResponse {
+  // The list of gRPC server client ID (represented by their multiplexer clients).
+  repeated string servers = 1;
+}
+
+// WatchGRPCServerRequest is the request message for WatchGRPCServer method.
+message WatchGRPCServerRequest {}
+
+// WatchGRPCServerResponse is the response message for WatchGRPCServer method.
+message WatchGRPCServerResponse {
+  // The client ID that represents the gRPC server.
+  string server = 1;
+  // List of possible event of WatchGRPCServerResponse
+  enum Event {
+    // Unspecified event, probably an issue with the request or the gRPC multiplexer.
+    EVENT_UNSPECIFIED = 0;
+    // The multiplexer client has connected a new gRPC server.
+    EVENT_CONNECTED = 1;
+    // The multiplexer client has disconnected an existing gRPC server.
+    EVENT_DISCONNECTED = 2;
+  }
+  // Action event related to the gRPC server.
+  Event event = 2;
+}

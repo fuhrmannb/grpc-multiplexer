@@ -5,12 +5,12 @@ import (
 )
 
 type discoveryServerImpl struct {
-	UnimplementedDiscoveryServer
+	UnimplementedDiscoveryServiceServer
 
 	clientRegistry *ServerRegistry
 }
 
-func NewServer(cr *ServerRegistry) DiscoveryServer {
+func NewServer(cr *ServerRegistry) DiscoveryServiceServer {
 	return &discoveryServerImpl{
 		clientRegistry: cr,
 	}
@@ -22,7 +22,7 @@ func (d *discoveryServerImpl) ListGRPCServer(_ context.Context, _ *ListGRPCServe
 	}, nil
 }
 
-func (d *discoveryServerImpl) WatchGRPCServer(_ *WatchGRPCServerRequest, stream Discovery_WatchGRPCServerServer) error {
+func (d *discoveryServerImpl) WatchGRPCServer(_ *WatchGRPCServerRequest, stream DiscoveryService_WatchGRPCServerServer) error {
 	obsChan := make(chan *WatchGRPCServerResponse)
 	d.clientRegistry.AddObserver(obsChan)
 	defer d.clientRegistry.RemoveObserver(obsChan)

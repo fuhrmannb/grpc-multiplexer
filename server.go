@@ -72,7 +72,7 @@ func (s *server) Run() error {
 	proxyServer := grpc.NewServer(
 		grpc.CustomCodec(proxy.Codec()),
 		grpc.UnknownServiceHandler(proxy.TransparentHandler(director)))
-	discovery.RegisterDiscoveryServer(proxyServer, discovery.NewServer(s.serverRegistry))
+	discovery.RegisterDiscoveryServiceServer(proxyServer, discovery.NewServer(s.serverRegistry))
 	logger := log.With().Str("proxy_lis_addr", s.proxyLis.Addr().String()).Str("multiplexer_lis_addr", s.multiplexerLis.Addr().String()).Logger()
 	logger.Info().Msg("ready to listen to new connection")
 	err := proxyServer.Serve(s.proxyLis)
