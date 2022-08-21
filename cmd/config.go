@@ -18,10 +18,11 @@ func InitConfig(cfgFile string, filename string) func() {
 		} else {
 			// Find home directory
 			home, err := os.UserHomeDir()
-			cobra.CheckErr(err)
-
-			// Search config in home & etc directories
-			viper.AddConfigPath(path.Join(home, fmt.Sprintf(".%s", filename)))
+			if err != nil {
+				// Search config in home directory
+				viper.AddConfigPath(path.Join(home, fmt.Sprintf(".%s", filename)))
+			}
+			// Search config in etc directory
 			viper.SetConfigType("yaml")
 			viper.AddConfigPath("/etc/grpc-multiplexer")
 			viper.SetConfigName(fmt.Sprintf("%s.yaml", filename))
