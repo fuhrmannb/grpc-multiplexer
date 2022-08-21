@@ -20,7 +20,7 @@ builds:
       - windows
       - darwin
 archives:
-  - id: grpc-multiplexer
+  - id: grpc-multiplexer-archive
     replacements:
       darwin: Darwin
       linux: Linux
@@ -40,3 +40,10 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+dockers:
+  - id: docker_multiplexer-server
+    ids:
+      - grpc-multiplexer-server
+    image_templates:
+      - "ghcr.io/fuhrmannb/grpc-multiplexer-server:{{ .Tag }}"
+      - "ghcr.io/fuhrmannb/grpc-multiplexer-server:latest"
